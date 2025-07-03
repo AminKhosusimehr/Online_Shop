@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static_root/
+
+# If using PostgreSQL:
+*.pgsql
+
+# Django migrations (optional — uncomment if needed)
+# **/migrations/
+# !**/migrations/__init__.py
+
+# Environment
+.env
+.env.*
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+.Python
+
+# IDEs/editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# pip dependency resolver
+pip-log.txt
+pip-delete-this-directory.txt
+
+# pytest
+.cache/
+.pytest_cache/
+
+# coverage
+htmlcov/
+.coverage
+.tox/
+.nox/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+
+# Local test reports
+test-results/
+
+# Pycharm specific
+__pycache__/
+.idea/
