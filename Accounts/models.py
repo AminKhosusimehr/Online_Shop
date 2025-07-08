@@ -11,6 +11,9 @@ class User(AbstractUser) :
     email = models.EmailField(blank=True,null=True)
     phone_number = models.CharField(null=False,blank=False)
     address = models.TextField(blank=True,null=False)
-    gender = models.CharField(choices=gender_choices,blnak=True,null=False)
+    gender = models.CharField(choices=gender_choices, blank=True, null=False)
+
+    def __str__(self):
+        return self.username
 
 
