@@ -1,3 +1,5 @@
+import re
+
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -19,6 +21,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(phone_number=data['phone_number']).exists():
             raise serializers.ValidationError('Phone number already registered')
 
+        return data
+
+    def validate_phone_number(self, data):
+        if not re.fullmatch(r'^09(0[1-3]|1[0-9]|2[0-2]|3[0-9]|9[0-9])\d{7}$', data):
+            raise serializers.ValidationError('Invalid phone number.')
         return data
 
     def create(self , validated_data):
