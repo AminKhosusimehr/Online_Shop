@@ -4,6 +4,8 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+from Carts.models import UserCart
+
 User = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True , required=True , validators=[validate_password])
@@ -32,6 +34,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop('password2' , None)
         user = User.objects.create_user(**validated_data)
         user.set_password(validated_data['password'])
+        UserCart.objects.create(user=user)
         return user
 
 
