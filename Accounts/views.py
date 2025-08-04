@@ -24,6 +24,7 @@ class RegisterView(APIView):
             "email": serializer.data["email"],
             }
         }
+
         return Response(response_data, status=status.HTTP_201_CREATED)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
