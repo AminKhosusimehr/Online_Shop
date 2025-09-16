@@ -2,7 +2,6 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import RegisterView , TokenObtainPairView
 from django.urls import path
-
 app_name = 'Accounts'
 
 urlpatterns=[
