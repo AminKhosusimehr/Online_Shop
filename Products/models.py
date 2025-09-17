@@ -1,7 +1,7 @@
 from django.db import models
 
 class Product (models.Model):
-    name = models.CharField(blank=False, null=False, max_length=50)
+    name = models.CharField(blank=False, null=False, max_length=50 , unique=True)
     price = models.PositiveIntegerField(blank=False, null=False)
     is_available = models.BooleanField(default=False)
     stock = models.PositiveIntegerField(default=0)
