@@ -2,7 +2,8 @@ from enum import unique
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .choices import gender_choices
+from .choices import  GenderChoices
+
 
 class User(AbstractUser) :
     username = models.CharField(max_length=30,unique=True,blank=False,null=False)
@@ -11,7 +12,7 @@ class User(AbstractUser) :
     email = models.EmailField(blank=True,null=True)
     phone_number = models.CharField(null=False,blank=False)
     address = models.TextField(blank=True,null=False)
-    gender = models.CharField(choices=gender_choices, blank=True, null=False)
+    gender = models.CharField(choices=GenderChoices, blank=True, null=False)
 
     def __str__(self):
         return self.username

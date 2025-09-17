@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'Accounts',
+    'Products',
+    'Carts',
 ]
 
 REST_FRAMEWORK = {
