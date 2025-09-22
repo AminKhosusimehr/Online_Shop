@@ -3,6 +3,8 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from Carts.models import UserCart
+
 User = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer) :
@@ -24,6 +26,7 @@ class RegisterSerializer(serializers.ModelSerializer) :
         user.set_password(validated_data['password'])
         user.is_staff = is_staff
         user.save()
+        UserCart.objects.create(user=user)
         return user
 
 class CustomUserSerializer(serializers.ModelSerializer) :
