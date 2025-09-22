@@ -7,7 +7,7 @@ app_name = 'carts'
 
 router = DefaultRouter()
 
-router.register(r'carts', views.CartItemViewSet, basename='carts')
+router.register(r'', views.CartsViewSet, basename='carts')
 
 urlpatterns = [
     path('', include(router.urls)),
