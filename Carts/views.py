@@ -42,3 +42,12 @@ class CartsViewSet(viewsets.ViewSet):
             return Response('Item removed', status=status.HTTP_200_OK)
         except CartItem.DoesNotExist :
             return Response('Item not found', status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=True , methods=['POST'] , permission_classes=[permissions.IsAuthenticated])
+    def update_quantity(self,request, pk=None):
+        user = request.user
+        cart_item = get_object_or_404(CartItem, id=pk , cart__user=user)
+        cart_item.quantity = int(request.data['quantity'])
+        cart_item.save()
+        return Response("Quantity updated " , status=status.HTTP_200_OK)
+
