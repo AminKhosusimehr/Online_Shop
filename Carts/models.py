@@ -7,9 +7,17 @@ from rest_framework.exceptions import ValidationError
 from Products.models import Product
 from Utils.models import TimeStampedModel
 
+from django.db.models import Sum , F
+
+
 class UserCart(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
+    @property
+    def total_price(self):
+        total = CartItem.objects.filter(cart=self).aggregate(
+            total=Sum(F('product__price') * F('quantity'))
+        )['total']
+        return total or 0
 
 class CartItem(models.Model):
     cart = models.ForeignKey(UserCart, on_delete=models.CASCADE)
