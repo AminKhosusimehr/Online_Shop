@@ -15,12 +15,22 @@ from Products.models import Product
 class CartsViewSet(viewsets.ViewSet):
     serializer_class = CartItemSerializer
 
-    @action(detail=False , methods=['POST'])
+    @action(detail=False , methods=['POST'] , permission_classes=[permissions.IsAuthenticated])
     def add_to_cart(self, request):
         user = request.user
         cart = UserCart.objects.get(user=user)
         product_id = request.data['product']
         product = Product.objects.get(id=product_id)
-        quantity = request.data['quantity']
-        CartItem.objects.create(cart=cart , product=product , quantity=quantity)
-        return Response('Item added' , status=status.HTTP_201_CREATED)
+        quantity = int(request.data['quantity'])
+        try:
+            cart_item = CartItem.objects.get(cart=cart , product = product )
+            cart_item.quantity = cart_item.quantity + quantity
+            cart_item.save()
+            return Response("Quantity updated " , status=status.HTTP_200_OK)
+
+
+        except CartItem.DoesNotExist:
+            CartItem.objects.create(cart=cart, product=product, quantity=quantity)
+            return Response('Item added', status=status.HTTP_201_CREATED)
+
+
