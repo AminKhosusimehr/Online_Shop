@@ -10,7 +10,8 @@ from django.shortcuts import get_object_or_404
 
 import Carts
 from Carts.models import CartItem , UserCart
-from Carts.serializers import CartItemSerializer
+from Carts.serializers import CartItemSerializer, AllCartsSerializer
+from Carts.models import CartItem
 from Products.models import Product
 
 class CartsViewSet(viewsets.ViewSet):
@@ -36,14 +37,13 @@ class CartsViewSet(viewsets.ViewSet):
 
     @action(detail=True , methods=['DELETE'] , permission_classes=[permissions.IsAuthenticated])
     def remove_from_cart(self, request, pk=None):
-        try:
-            cart_item = get_object_or_404(CartItem, id=pk, cart__user=request.user)
-            cart_item.delete()
-            return Response('Item removed', status=status.HTTP_200_OK)
-        except CartItem.DoesNotExist :
-            return Response('Item not found', status=status.HTTP_404_NOT_FOUND)
+        user = request.user
+        cart_item = get_object_or_404(CartItem, pk=pk , cart__user=user)
+        cart_item.delete()
 
-    @action(detail=True , methods=['POST'] , permission_classes=[permissions.IsAuthenticated])
+        return Response("Item removed" , status=status.HTTP_200_OK)
+
+    @action(detail=False , methods=['POST'] , permission_classes=[permissions.IsAuthenticated])
     def update_quantity(self,request, pk=None):
         user = request.user
         cart_item = get_object_or_404(CartItem, id=pk , cart__user=user)
@@ -51,3 +51,9 @@ class CartsViewSet(viewsets.ViewSet):
         cart_item.save()
         return Response("Quantity updated " , status=status.HTTP_200_OK)
 
+    @action(detail=False , methods=['GET'] , permission_classes=[permissions.IsAdminUser])
+    def get_all_carts(self , request):
+        items= CartItem.objects.all()
+        serializer = AllCartsSerializer(items, many=True)
+
+        return Response(serializer.data , status=status.HTTP_200_OK)
